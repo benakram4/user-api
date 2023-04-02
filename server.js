@@ -48,7 +48,7 @@ passport.use(strategy);
 // add passport as application-level middleware
 app.use(passport.initialize());
 
-// JWT protected routes
+
 
 
 app.post("/api/user/register", (req, res) => {
