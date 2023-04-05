@@ -60,7 +60,7 @@ app.post("/api/user/register", (req, res) => {
         });
 });
 
-app.post("/api/users/login", (req, res) => {
+app.post("/api/user/login", (req, res) => {
     userService.checkUser(req.body)
         .then((user) => {
 
