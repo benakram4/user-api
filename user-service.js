@@ -11,7 +11,7 @@ let userSchema = new Schema({
     unique: true,
   },
   password: String,
-  favorites: [String],
+  favourites: [String],
   history: [String],
 });
 
@@ -81,15 +81,15 @@ module.exports.checkUser = function (userData) {
   });
 };
 
-module.exports.getFavorites = function (id) {
+module.exports.getFavourites = function (id) {
   return new Promise(function (resolve, reject) {
     User.findById(id)
       .exec()
       .then((user) => {
-        resolve(user.favorites);
+        resolve(user.favourites);
       })
       .catch((err) => {
-        reject(`Unable to get favorites for user with id: ${id}`);
+        reject(`Unable to get favourites for user with id: ${id}`);
       });
   });
 };
@@ -99,35 +99,35 @@ module.exports.addFavourite = function (id, favId) {
     User.findById(id)
       .exec()
       .then((user) => {
-        if (user.favorites.length < 50) {
+        if (user.favourites.length < 50) {
           User.findByIdAndUpdate(
             id,
-            { $addToSet: { favorites: favId } },
+            { $addToSet: { favourites: favId } },
             { new: true }
           )
             .exec()
             .then((user) => {
-              resolve(user.favorites);
+              resolve(user.favourites);
             })
             .catch((err) => {
-              reject(`Unable to update favorites for user with id: ${id}`);
+              reject(`Unable to update favourites for user with id: ${id}`);
             });
         } else {
-          reject(`Unable to update favorites for user with id: ${id}`);
+          reject(`Unable to update favourites for user with id: ${id}`);
         }
       });
   });
 };
 
-module.exports.removeFavorite = function (id, favId) {
+module.exports.removeFavourite = function (id, favId) {
   return new Promise(function (resolve, reject) {
-    User.findByIdAndUpdate(id, { $pull: { favorites: favId } }, { new: true })
+    User.findByIdAndUpdate(id, { $pull: { favourites: favId } }, { new: true })
       .exec()
       .then((user) => {
-        resolve(user.favorites);
+        resolve(user.favourites);
       })
       .catch((err) => {
-        reject(`Unable to update favorites for user with id: ${id}`);
+        reject(`Unable to update favourites for user with id: ${id}`);
       });
   });
 };
@@ -150,7 +150,7 @@ module.exports.addHistory = function (id, historyId) {
     User.findById(id)
       .exec()
       .then((user) => {
-        if (user.favorites.length < 50) {
+        if (user.favourites.length < 50) {
           User.findByIdAndUpdate(
             id,
             { $addToSet: { history: historyId } },
